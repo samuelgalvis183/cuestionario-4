@@ -60,10 +60,12 @@
     }
     .proposito {
       text-align: center;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       color: #00ffff;
-      margin-bottom: 40px;
+      margin: 30px 0 40px;
       font-weight: 600;
+      line-height: 1.6;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
     }
 
     .temas {
@@ -138,11 +140,11 @@
     }
     .timer {
       text-align: center;
-      font-size: 1.8rem;
+      font-size: 2rem;
       color: #00ffff;
       font-family: 'Orbitron';
       margin: 15px 0;
-      text-shadow: 0 0 15px #00ffff;
+      text-shadow: 0 0 20px #00ffff;
     }
 
     .pregunta { font-size: 1.8rem; text-align: center; margin: 40px 0; color: #00ffff; }
@@ -182,11 +184,12 @@
 
     .stats {
       text-align: center;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       margin: 30px 0;
       color: #00ffff;
+      line-height: 2;
     }
-    .stats strong { color: #ff00ff; }
+    .stats strong { color: #ff00ff; font-size: 1.8rem; }
 
     .hidden { display: none; }
   </style>
@@ -197,7 +200,11 @@
     <div id="intro">
       <div class="autor">// Autor: Samuel Galvis</div>
       <h1>NEON TECH QUIZ</h1>
-      <p class="proposito">Desafío de conocimiento tecnológico nivel intermedio. ¿Estás listo para entrar en la red?</p>
+      <p class="proposito">
+        Evalúa tus conocimientos reales en tecnología, redes, programación y sistemas.<br>
+        <strong>Desafío de conocimiento tecnológico nivel intermedio.</strong><br>
+        ¿Estás listo para entrar en la red?
+      </p>
 
       <div class="temas">
         <div class="tema"><h3>Hardware</h3><p>CPU, RAM, SSD vs HDD, GPU, placas base, overclocking, refrigeración líquida, arquitectura x86-64 vs ARM.</p></div>
@@ -249,8 +256,11 @@
         <p>Este es tu intento número: <strong id="intentoActual">1</strong></p>
       </div>
 
-      <h2 style="text-align:center; margin:40px 0; color:#ff00ff;">RESUMEN DETALLADO</h2>
+      <h2 style="text-align:center; margin:40px 0 30px; color:#ff00ff; font-size:2rem; text-shadow:0 0 15px #ff00ff;">
+        RESUMEN DETALLADO
+      </h2>
       <div id="resumen"></div>
+      
       <div style="text-align:center; margin-top:50px;">
         <button class="btn btn-primary" onclick="location.reload()">REINICIAR SISTEMA</button>
       </div>
@@ -258,7 +268,7 @@
   </div>
 
   <script>
-    const preguntas = [
+    const preguntas = [ /* Tus 40 preguntas completas aquí (las mismas de siempre) */ 
       { q: "¿Qué capa del modelo OSI maneja el enrutamiento?", a: "Capa 3 (Red)", opciones: ["Capa 2 (Enlace)", "Capa 3 (Red)", "Capa 4 (Transporte)", "Capa 7 (Aplicación)"], pista: "Es donde operan los routers y las direcciones IP." },
       { q: "¿Qué puerto usa HTTPS por defecto?", a: "443", opciones: ["80", "443", "22", "3389"], pista: "Es el puerto seguro, la versión cifrada de HTTP." },
       { q: "¿Qué significa DNS?", a: "Domain Name System", opciones: ["Data Network Service", "Domain Name System", "Dynamic Name Server", "Direct Network System"], pista: "Convierte nombres como google.com en direcciones IP." },
@@ -282,7 +292,8 @@
       { q: "¿Qué capa OSI maneja TCP y UDP?", a: "Capa 4 (Transporte)", opciones: ["Capa 3", "Capa 4 (Transporte)", "Capa 5", "Capa 7"], pista: "Segmentos, fiabilidad y control de flujo." },
       { q: "¿Qué significa CDN?", a: "Content Delivery Network", opciones: ["Cloud Data Network", "Content Delivery Network", "Central Delivery Node", "Cache Delivery Network"], pista: "Sirve contenido estático desde servidores cercanos." },
       { q: "¿Qué comando crea una rama en Git?", a: "git branch nombre", opciones: ["git checkout -b", "git branch nombre", "git new branch", "git create"], pista: "Solo crea la rama, no te cambia a ella." },
-      { q: "¿Qué puerto usa MySQL?", a: "3306", opciones: ["5432", "3306", "27017", "8080"], pista: "Puerto por defecto del servidor MySQL." },
+      { q: "¿Qué puerto usa MySQL?", a: "3306", opciones: ["5432", "3306", "27017", "8080"], pista: "
+```Puerto por defecto del servidor MySQL." },
       { q: "¿Qué significa OOP?", a: "Object-Oriented Programming", opciones: ["Order of Operations Programming", "Object-Oriented Programming", "Open Online Programming", "Original Object Protocol"], pista: "Clases, objetos, herencia, polimorfismo..." },
       { q: "¿Qué protocolo usa el correo entrante seguro con cifrado?", a: "IMAPS", opciones: ["IMAP", "POP3", "IMAPS", "SMTPS"], pista: "IMAP sobre SSL/TLS, puerto 993." },
       { q: "¿Qué significa IPv6?", a: "Internet Protocol versión 6", opciones: ["Improved Protocol v6", "Internet Protocol versión 6", "International Protocol v6", "Internet Packet v6"], pista: "Direcciones de 128 bits, como 2001:0db8::1" },
@@ -311,7 +322,6 @@
       document.getElementById("intro").classList.add("hidden");
       document.getElementById("quiz").classList.remove("hidden");
 
-      // Iniciar cronómetro
       inicioTiempo = Date.now();
       timerInterval = setInterval(actualizarCronometro, 1000);
 
@@ -397,7 +407,7 @@
     }
 
     function finalizar() {
-      clearInterval(timerInterval); // Detener cronómetro
+      clearInterval(timerInterval);
       const tiempoFinal = document.getElementById("cronometro").textContent;
 
       intentosTotales++;
@@ -410,7 +420,7 @@
       document.getElementById("nombreFinal").textContent = nombre;
       document.getElementById("notaFinal").textContent = correctas + "/20";
       document.getElementById("correctas").textContent = correctas;
-      document.getElementById("intentoActual").textContent = intentstingTotales;
+      document.getElementById("intentoActual").textContent = intentosTotales;
       document.getElementById("tiempoFinal").textContent = tiempoFinal;
 
       let html = "";
@@ -418,7 +428,11 @@
         const p = preguntasSel[i];
         const icon = r.correcta ? "Correcto" : "Incorrecto";
         const color = r.correcta ? "#00ffaa" : "#ff4444";
-        html += `<div style="background:rgba(255,255,255,0.05); padding:18px; border-radius:12px; margin:12px 0; border-left:4px solid ${color};"><p><strong>${i+1}.</strong> ${p.q}</p><p style="color:${color};">${icon} Tu respuesta: <strong>${r.resp}</strong></p>${!r.correcta ? `<p style="color:#00ffaa;">Correcta: ${p.a}</p>` : ''}</div>`;
+        html += `<div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; margin:15px 0; border-left:5px solid ${color};">
+          <p><strong>${i+1}.</strong> ${p.q}</p>
+          <p style="color:$$ {color}; margin:8px 0;"> $${icon} Tu respuesta: <strong>${r.resp}</strong></p>
+          ${!r.correcta ? `<p style="color:#00ffaa; margin:8px 0;">Correcta: ${p.a}</p>` : ''}
+        </div>`;
       });
       document.getElementById("resumen").innerHTML = html;
     }
